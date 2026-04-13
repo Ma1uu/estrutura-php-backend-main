@@ -10,7 +10,7 @@
                 Nome
             </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Estado"
+                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Nome"
                     value="">
             </div>
         </div>

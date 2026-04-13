@@ -1,5 +1,5 @@
 <h3 class="mt-3 text-primary">
-    Cliente
+    Fornecedor
 </h3>
 
 <div class="card shadow mt-3"><!-- acrescentei um card com sombra aqui tbm -->
@@ -10,7 +10,7 @@
                 Nome
             </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Estado"
+                <input type="text" class="form-control" id="txtnome" name="txtnome" placeholder="Nome"
                     value="">
             </div>
         </div>
