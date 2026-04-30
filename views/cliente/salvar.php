@@ -16,10 +16,10 @@
         </div>
         <div class="form-group row">
             <label for="inputText" class="col-sm-2 col-form-label">
-                Sigla - UF
+                Informações
             </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="txtsigla" name="txtsigla" placeholder="UF"
+                <input type="text" class="form-control" id="txtinformacoes" name="txtinformacoes" placeholder="Informações"
                     value="">
             </div>
         </div>
@@ -36,3 +36,36 @@
         </div>
     </form>
 </div>
+
+<?php
+    //verificar se botão btnsalvar foi acionado
+    if(filter_input(INPUT_POST, 'btnsalvar')){
+        $nome = filter_input(INPUT_POST, 'txtnome');
+        $info = filter_input(INPUT_POST, 'txtinformacoes');
+
+    //acesso a classe em models
+        include_once '../models/cliente.php';
+        $cli = new Cliente();
+
+    //enviando os dados do form aos aributos de classe
+    $cli->setId(NULL);
+    $cli->setNome($nome);
+    $cli->setInformacoes($info);
+
+    //efetivar o insert into
+    if($cli->salvar()) {
+        ?>
+            <div class="alert alert-primary mt-3" role="alert">
+                Cliente - Cadastro efetuado com sucesso.
+            </div>
+
+        <?php
+        } else {
+            ?>
+            <div class="alert alert-danger mt-3" role="alert">
+                Cliente - Erro ao cadastrar.
+            </div>
+
+        <?php
+        }
+    }

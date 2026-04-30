@@ -49,6 +49,7 @@ class Categoria {
             $executar->bindValue(2, mb_strtoupper( $this->nome));
             $executar->bindValue(3, mb_strtoupper( $this->informacoes));
             return $executar->execute() == 1 ? true : false;
+        
         } catch (PDOException $erro){
             echo $erro->getMessage();
         }
