@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     include_once '../models/Categoria.php';
                     $cat = new Categoria();
                     $dados = $cat->listar(null);
@@ -27,7 +27,7 @@
                     <tr>
                         <td><?= $mostrar['id'] ?></td>
                         <td><?= $mostrar['nome'] ?></td>
-                        <td><?= $mostrar['informações'] ?></td>
+                        <td><?= $mostrar['informacoes'] ?></td>
                         <td>Excluir e Editar</td>
                     </tr>
                     <?php
