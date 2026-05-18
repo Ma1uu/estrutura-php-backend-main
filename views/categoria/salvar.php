@@ -30,7 +30,7 @@
                     value="Cadastrar">
             </div>
             <!-- faltou um link aqui-->
-            <a href="?p=categorias" class="btn btn-danger">Cancelar</a>
+            <a href="?p=fornecedores" class="btn btn-danger">Cancelar</a>
         </div>
     </form>
 </div>
