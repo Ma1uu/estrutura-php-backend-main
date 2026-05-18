@@ -19,8 +19,9 @@
                 Informações
             </label>
             <div class="col-sm-10">
-                <textarea name="txtinformacoes" id="txtinformacoes" rows="3" placeholder="Informações aqui" class="form-control" ></textarea>
+                <textarea name="txtinformacoes" id="txtinformacoes" rows="3" placeholder="Informações aqui" class="form-control"></textarea>
             </div>
+        </div>
 
         <div class="form-group row">
             <div class="col-sm-10">
@@ -36,34 +37,32 @@
 </div>
 
 <?php
-    //verificar se botão btnsalvar foi acionado
-    if(filter_input(INPUT_POST, 'btnsalvar')){
-        $nome = filter_input(INPUT_POST, 'txtnome');
-        $info = filter_input(INPUT_POST, 'txtinformacoes');
-
-    //acesso a classe em models
-        include_once '../models/categoria.php';
-        $cat = new Categoria();
-
-    //enviando os dados do form aos aributos de classe
+//verificar se o botão btnsalvar foi acionado
+if (filter_input(INPUT_POST, 'btnsalvar')) {
+    $nome = filter_input(INPUT_POST, 'txtnome');
+    $info = filter_input(INPUT_POST, 'txtinformacoes');
+    //acesso à classe (em models)
+    include_once '../models/Categoria.php';
+    $cat = new Categoria();
+    //enviando os dados do form aos atributos da classe
     $cat->setId(NULL);
     $cat->setNome($nome);
-    $cat->setinformacoes($info);
+    $cat->setInformacoes($info);
 
     //efetivar o insert into
-    if($cat->salvar()) {
-        ?>
-            <div class="alert alert-primary mt-3" role="alert">
-                Categoria - Cadastro efetuado com sucesso.
-            </div>
-
-        <?php
-        } else {
-            ?>
-            <div class="alert alert-danger mt-3" role="alert">
-                Categoria - Erro ao cadastrar.
-            </div>
-
-        <?php
-        }
+    if ($cat->salvar()) {
+?>
+        <div class="alert alert-primary mt-3" role="alert">
+            Categoria - cadastro efetuado com sucesso.
+        </div>
+        <meta http-equiv="refresh" content="0.2;URL=?p=categorias">
+    <?php
+    } else {
+    ?>
+        <div class="alert alert-danger mt-3" role="alert">
+            Categoria - erro ao cadastrar.
+        </div>
+        <meta http-equiv="refresh" content="0.2;URL=?p=categorias">
+<?php
     }
+}
