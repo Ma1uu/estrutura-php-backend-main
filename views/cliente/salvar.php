@@ -32,18 +32,18 @@
 
         <div class="form-group row">
 
-            <label for="txtinformacoes"
+            <label for="txtemail"
                 class="col-sm-2 col-form-label">
 
-                Informações
+                Email
             </label>
 
             <div class="col-sm-10">
 
-                <textarea name="txtinformacoes"
-                    id="txtinformacoes"
+                <textarea name="txtemail"
+                    id="txtemail"
                     rows="3"
-                    placeholder="Informações aqui"
+                    placeholder="Email aqui"
                     class="form-control"></textarea>
 
             </div>
@@ -79,7 +79,7 @@ if (filter_input(INPUT_POST, 'btnsalvar')) {
 
     $nome = filter_input(INPUT_POST, 'txtnome');
 
-    $info = filter_input(INPUT_POST, 'txtinformacoes');
+    $info = filter_input(INPUT_POST, 'txtemail');
 
     include_once '../models/Cliente.php';
 

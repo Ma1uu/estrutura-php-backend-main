@@ -20,7 +20,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Informações</th>
+                        <th>Cidade</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -45,7 +45,7 @@
 
                             <td><?= $mostrar['nome'] ?></td>
 
-                            <td><?= $mostrar['informacoes'] ?></td>
+                            <td><?= $mostrar['cidade'] ?></td>
 
                             <td>Excluir e Editar</td>
 

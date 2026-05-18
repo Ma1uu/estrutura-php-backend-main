@@ -1,0 +1,133 @@
+Procedures SQL
+Maria Luiza e Maria Vitória
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE salvar_categoria (
+    IN var_id INT,
+    IN var_nome VARCHAR(100),
+    IN var_informacoes TEXT
+)
+BEGIN
+ 
+    IF var_id IS NULL OR var_id = 0 THEN
+ 
+        INSERT INTO categoria (nome, informacoes)
+        VALUES (var_nome, var_informacoes);
+ 
+    ELSE
+ 
+        UPDATE categoria
+        SET
+            nome = var_nome,
+            informacoes = var_informacoes
+        WHERE id = var_id;
+ 
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE salvar_cliente (
+    IN var_id INT,
+    IN var_nome VARCHAR(100),
+    IN var_email VARCHAR(100)
+)
+BEGIN
+ 
+    IF var_id IS NULL OR var_id = 0 THEN
+ 
+        INSERT INTO cliente (nome, email)
+        VALUES (var_nome, var_email);
+ 
+    ELSE
+ 
+        UPDATE cliente
+        SET
+            nome = var_nome,
+            email = var_email
+        WHERE id = var_id;
+ 
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE salvar_fornecedor (
+    IN var_id INT,
+    IN var_nome VARCHAR(100),
+    IN var_empresa VARCHAR(100),
+    IN var_funcao VARCHAR(100)
+)
+BEGIN
+ 
+    IF var_id IS NULL OR var_id = 0 THEN
+ 
+        INSERT INTO fornecedor (nome, empresa, funcao)
+        VALUES (var_nome, var_empresa, var_funcao);
+ 
+    ELSE
+ 
+        UPDATE fornecedor
+        SET
+            nome = var_nome,
+            empresa = var_empresa,
+            funcao = var_funcao
+        WHERE id = var_id;
+ 
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE listar_categoria (IN var_id INT)
+BEGIN
+ 
+    IF var_id IS NULL THEN
+        SELECT * FROM categoria;
+    ELSE
+        SELECT * FROM categoria WHERE id = var_id;
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE listar_cliente (IN var_id INT)
+BEGIN
+ 
+    IF var_id IS NULL THEN
+        SELECT * FROM cliente;
+    ELSE
+        SELECT * FROM cliente WHERE id = var_id;
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
+ 
+DELIMITER $$
+ 
+CREATE PROCEDURE listar_fornecedor (IN var_id INT)
+BEGIN
+ 
+    IF var_id IS NULL THEN
+        SELECT * FROM fornecedor;
+    ELSE
+        SELECT * FROM fornecedor WHERE id = var_id;
+    END IF;
+ 
+END$$
+ 
+DELIMITER ;
