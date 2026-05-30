@@ -4,11 +4,12 @@ include_once 'Conn.php';
 
 //Extensão PHP Getters & Setters
 
-class Categoria
+class Funcionario
 {
     private $id;
     private $nome;
-    private $informacoes;
+    private $email;
+    private $cargo;
     private $conn;
 
     public function getId()
@@ -33,14 +34,14 @@ class Categoria
         return $this;
     }
 
-    public function getInformacoes()
+    public function getEmail()
     {
-        return $this->informacoes;
+        return $this->email;
     }
 
-    public function setInformacoes($informacoes)
+    public function setEmail($email)
     {
-        $this->informacoes = $informacoes;
+        $this->email = $email;
         return $this;
     }
 

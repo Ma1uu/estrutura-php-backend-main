@@ -8,4 +8,7 @@
         'add/cliente' => 'cliente/salvar.php',
         'fornecedores' => 'fornecedor/consultar.php',
         'add/fornecedor' => 'fornecedor/salvar.php',
+        'excluir/categoria' => 'categoria/excluir.php',
+        'excluir/cliente' => 'cliente/excluir.php',
+        'excluir/fornecedor' => 'fornecedor/excluir.php',
     ];
