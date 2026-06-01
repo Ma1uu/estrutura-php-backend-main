@@ -3,7 +3,7 @@
 
     if($id){
         include_once '../models/Fornecedor.php';
-        $cat = new Categoria();
+        $cat = new Fornecedor();
         $cat -> setId($id);
 
         if($cat->excluir()){
@@ -15,4 +15,4 @@
         }
     }
     ?>
-    <meta http-equiv="refresh" CONTENT="1.5;URL=?p=fornecedor"
+    <meta http-equiv="refresh" CONTENT="1.5;URL=?p=fornecedores"

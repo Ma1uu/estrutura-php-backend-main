@@ -4,56 +4,64 @@ include_once 'Conn.php';
 
 //Extensão PHP Getters & Setters
 
-class Funcionario
-{
+class Funcionario {
     private $id;
     private $nome;
     private $email;
     private $cargo;
     private $conn;
+    private $tabela = "funcionario";
 
-    public function getId()
-    {
+    public function getID(): mixed {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setID($id): static 
     {
         $this->id = $id;
         return $this;
     }
 
-    public function getNome()
-    {
+    public function getNome($nome): mixed {
         return $this->nome;
     }
 
-    public function setNome($nome)
+    public function setNome($nome): mixed
     {
         $this->nome = $nome;
-        return $this;
+        return $nome;
     }
 
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): mixed
     {
         $this->email = $email;
-        return $this;
+        return $email;
     }
 
-    public function salvar()
+    public function getCargo() {
+        return $this->cargo;
+    }
+
+    public function setCargo($cargo): mixed
     {
-        try {
+        $this->cargo = $cargo;
+        return $cargo;
+    }
+
+    public function salvar() 
+    {
+        try{
             $this->conn = new Conn();
-            $sql = "CALL salvar_categoria(?, ?, ?)";
+            $sql = "Call salvar_funcionario(?, ?, ?, ?)";
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
-            $executar->bindValue(3, mb_strtoupper($this->informacoes));
+            $executar->bindValue(3, mb_strtoupper($this->email));
+            $executar->bindValue(4, mb_strtoupper($this->cargo));
             return $executar->execute() == 1 ? true : false;
         } catch (PDOException $erro) {
             echo $erro->getMessage();
@@ -64,7 +72,7 @@ class Funcionario
     {
         try {
             $this->conn = new Conn();
-            $sql = "CALL listar_categoria(?)";
+            $sql = "CALL listar_funcionario(?)";
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $var_id);
             return $executar->execute() == 1 ? $executar->fetchAll() : false;
@@ -72,9 +80,8 @@ class Funcionario
             echo $erro->getMessage();
         }
     }
-}
 
- public function excluir()
+    public function excluir()
     {
         try{
             $this->conn = new Conn();
@@ -86,3 +93,5 @@ class Funcionario
             echo $erro->getMessage();
         }
     }
+
+}

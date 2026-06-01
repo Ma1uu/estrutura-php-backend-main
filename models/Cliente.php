@@ -8,6 +8,7 @@ class Cliente
     private $nome;
     private $informacoes;
     private $conn;
+    private $tabela = "cliente";
 
     public function getId()
     {
@@ -84,7 +85,6 @@ class Cliente
             echo $erro->getMessage();
         }
     }
-}
 
  public function excluir()
     {
@@ -98,3 +98,4 @@ class Cliente
             echo $erro->getMessage();
         }
     }
+}

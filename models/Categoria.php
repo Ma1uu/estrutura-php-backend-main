@@ -10,6 +10,7 @@ class Categoria
     private $nome;
     private $informacoes;
     private $conn;
+    private $tabela = "categoria";
 
     public function getId()
     {
@@ -71,7 +72,6 @@ class Categoria
             echo $erro->getMessage();
         }
     }
-}
 
  public function excluir()
     {
@@ -85,3 +85,4 @@ class Categoria
             echo $erro->getMessage();
         }
     }
+}

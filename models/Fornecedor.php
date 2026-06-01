@@ -8,6 +8,7 @@ class Fornecedor
     private $nome;
     private $informacoes;
     private $conn;
+    private $tabela = "fornecedor";
 
     public function getId()
     {
@@ -87,7 +88,6 @@ class Fornecedor
             echo $erro->getMessage();
         }
     }
-}
 
  public function excluir()
     {
@@ -101,3 +101,4 @@ class Fornecedor
             echo $erro->getMessage();
         }
     }
+}

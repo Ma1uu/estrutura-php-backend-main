@@ -19,6 +19,12 @@
                 <a class="nav-link" href="?p=fornecedores">
                     <i class="bi bi-people-fill"></i> Consultar Fornecedores
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?p=funcionarios">
+                    <i class="bi bi-people-fill"></i> Consultar Funcionarios
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
