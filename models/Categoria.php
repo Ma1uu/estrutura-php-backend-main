@@ -4,52 +4,49 @@ include_once 'Conn.php';
 
 //Extensão PHP Getters & Setters
 
-class Categoria
-{
+class Categoria {
     private $id;
     private $nome;
     private $informacoes;
     private $conn;
     private $tabela = "categoria";
 
-    public function getId()
-    {
+    public function getID(): mixed {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setID($id): static 
     {
         $this->id = $id;
         return $this;
     }
 
-    public function getNome()
-    {
+    public function getNome($nome): mixed {
         return $this->nome;
     }
 
-    public function setNome($nome)
+    public function setNome($nome): mixed
     {
         $this->nome = $nome;
-        return $this;
+        return $nome;
     }
 
-    public function getInformacoes()
-    {
+    public function getInformacoes() {
         return $this->informacoes;
     }
 
-    public function setInformacoes($informacoes)
+    
+    public function setInformacoes($informacoes): mixed
     {
         $this->informacoes = $informacoes;
-        return $this;
+        return $informacoes;
     }
 
-    public function salvar()
+    public function salvar() 
     {
-        try {
+        try{
             $this->conn = new Conn();
-            $sql = "CALL salvar_categoria(?, ?, ?)";
+            $sql = "Call salvar_categoria(?, ?, ?)";
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
@@ -72,8 +69,9 @@ class Categoria
             echo $erro->getMessage();
         }
     }
-
- public function excluir()
+    
+    // métodos sem procedure
+    public function excluir()
     {
         try{
             $this->conn = new Conn();
@@ -85,4 +83,120 @@ class Categoria
             echo $erro->getMessage();
         }
     }
+    
+    public function inserir()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "INSERT INTO categoria VALUES (?, ?, ?)";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $this->id);
+            $executar->bindValue(2, mb_strtoupper($this->nome));
+            $executar->bindValue(3, mb_strtoupper($this->informacoes));
+            return $executar->execute() == 1 ? true : false;
+        } catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+    public function alterar()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "UPDATE categoria 
+                    SET nome = ?, informacoes = ?,
+                    WHERE id = ?";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, mb_strtoupper($this->nome));
+            $executar->bindValue(2, mb_strtoupper($this->informacoes));
+            $executar->bindValue(3, $this->id); 
+            return $executar->execute() == 1 ? true :false;
+        } catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+    public function listarSemProcedure()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "SELECT * FROM {$this->tabela} ORDER BY nome";
+            $executar = $this->conn->prepare($sql); 
+            return $executar->execute() == 1 ? true :false;
+        } catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+    public function consultarPorID()
+    {
+        try {
+            $this->conn = new Conn();
+            $sql = "SELECT * FROM {$this->tabela} WHERE id = ?";
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $this->id); 
+            return $executar->execute() == 1 ? true :false;
+        } catch (PDOException $erro){
+            echo $erro->getMessage();
+        }
+    }
+
+    public function crudPhp($opcao)
+    {
+        try {
+
+            $this->con = new Conn();
+
+            switch ($opcao) {
+
+                case 'I':
+
+                    $sql = "INSERT INTO {$this->tabela}
+                        (nome, informacoes)
+                        VALUES (?, ?)";
+
+                    $executar = $this->con->prepare($sql);
+
+                    $executar->bindValue(1, mb_strtoupper($this->nome));
+                    $executar->bindValue(2, mb_strtoupper($this->uf));
+
+                    break;
+
+                case 'A':
+
+                    $sql = "UPDATE {$this->table}
+                           SET nome = ?,
+                               informacoes = ?
+                         WHERE id = ?";
+
+                    $executar = $this->con->prepare($sql);
+
+                    $executar->bindValue(1, mb_strtoupper($this->nome));
+                    $executar->bindValue(2, mb_strtoupper($this->uf));
+                    $executar->bindValue(3, $this->id);
+
+                    break;
+
+                case 'E':
+
+                    $sql = "DELETE FROM {$this->tabela}
+                        WHERE id = ?";
+
+                    $executar = $this->con->prepare($sql);
+
+                    $executar->bindValue(1, $this->id);
+
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return $executar->execute() == 1 ? true : false;
+        } catch (PDOException $exc) {
+
+            echo $exc->getMessage();
+        }
+    }
+
 }
