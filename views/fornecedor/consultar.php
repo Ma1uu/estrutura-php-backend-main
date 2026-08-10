@@ -8,9 +8,10 @@
                 Listar Fornecedores
 
                 <a class="btn btn-success float-right mb-3 mr-3"
-                    href="?p=add/fornecedor">
+                   href="?p=add/fornecedor">
 
                     <i class="bi bi-database-fill-add"></i>
+
                 </a>
             </h3>
 
@@ -27,26 +28,43 @@
 
                 <tbody>
 
-                     <?php
+                    <?php
+
                     include_once '../models/Fornecedor.php';
-                    $cat = new Fornecedor();
-                    $dados = $cat->listar(null);
-                    foreach ($dados as $mostrar) {
+
+                    $for = new Fornecedor();
+
+                    // SEM PROCEDURE
+                    $dados = $for->listarSemProcedure();
+
+                    if ($dados) {
+
+                        foreach ($dados as $mostrar) {
                     ?>
+
                     <tr>
+
                         <td><?= $mostrar['id'] ?></td>
                         <td><?= $mostrar['nome'] ?></td>
                         <td><?= $mostrar['cidade'] ?></td>
+
                         <td>
+
                             <a href="?p=excluir/fornecedor&id=<?= $mostrar['id'] ?>"
-                            class="btn btn-danger"
-                            title="Excluir"
-                            onclick="return confirm('Tem certeza que deseja excluir?')">
+                               class="btn btn-danger"
+                               title="Excluir"
+                               onclick="return confirm('Tem certeza que deseja excluir?')">
+
                                 <i class="bi bi-x-circle"></i>
+
                             </a>
+
                         </td>
+
                     </tr>
+
                     <?php
+                        }
                     }
                     ?>
 

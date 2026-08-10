@@ -5,26 +5,24 @@
 <div class="card shadow mt-3">
 
     <form method="post"
-        name="formsalvar"
-        id="formSalvar"
-        class="m-3"
-        enctype="multipart/form-data">
+          name="formsalvar"
+          id="formSalvar"
+          class="m-3">
 
         <div class="form-group row">
 
             <label for="txtnome"
-                class="col-sm-2 col-form-label">
-
+                   class="col-sm-2 col-form-label">
                 Nome
             </label>
 
             <div class="col-sm-10">
 
                 <input type="text"
-                    class="form-control"
-                    id="txtnome"
-                    name="txtnome"
-                    placeholder="Cliente">
+                       class="form-control"
+                       id="txtnome"
+                       name="txtnome"
+                       placeholder="Cliente">
 
             </div>
 
@@ -33,18 +31,17 @@
         <div class="form-group row">
 
             <label for="txtemail"
-                class="col-sm-2 col-form-label">
-
+                   class="col-sm-2 col-form-label">
                 Email
             </label>
 
             <div class="col-sm-10">
 
-                <textarea name="txtemail"
-                    id="txtemail"
-                    rows="3"
-                    placeholder="Email aqui"
-                    class="form-control"></textarea>
+                <input type="email"
+                       class="form-control"
+                       id="txtemail"
+                       name="txtemail"
+                       placeholder="Email">
 
             </div>
 
@@ -55,15 +52,14 @@
             <div class="col-sm-10">
 
                 <input type="submit"
-                    class="btn btn-primary"
-                    name="btnsalvar"
-                    value="Cadastrar">
+                       class="btn btn-primary"
+                       name="btnsalvar"
+                       value="Cadastrar">
 
             </div>
 
             <a href="?p=clientes"
-                class="btn btn-danger">
-
+               class="btn btn-danger">
                 Cancelar
             </a>
 
@@ -78,47 +74,36 @@
 if (filter_input(INPUT_POST, 'btnsalvar')) {
 
     $nome = filter_input(INPUT_POST, 'txtnome');
-
-    $info = filter_input(INPUT_POST, 'txtemail');
+    $email = filter_input(INPUT_POST, 'txtemail');
 
     include_once '../models/Cliente.php';
 
     $cli = new Cliente();
 
-    $cli->setId(NULL);
+    $cli->setID(NULL);
     $cli->setNome($nome);
-    $cli->setInformacoes($info);
+    $cli->setEmail($email);
 
-    if ($cli->salvar()) {
-
+    // SEM PROCEDURE
+    if ($cli->inserir()) {
 ?>
 
         <div class="alert alert-primary mt-3" role="alert">
-
             Cliente - cadastro efetuado com sucesso.
-
         </div>
 
         <meta http-equiv="refresh"
-            content="0.2;URL=?p=clientes">
-
-    <?php
-
-    } else {
-
-    ?>
-
-        <div class="alert alert-danger mt-3" role="alert">
-
-            Cliente - erro ao cadastrar.
-
-        </div>
-
-        <meta http-equiv="refresh"
-            content="0.2;URL=?p=clientes">
+              content="0.2;URL=?p=clientes">
 
 <?php
+    } else {
+?>
 
+        <div class="alert alert-danger mt-3" role="alert">
+            Cliente - erro ao cadastrar.
+        </div>
+
+<?php
     }
 }
 ?>

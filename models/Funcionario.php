@@ -2,9 +2,8 @@
 
 include_once 'Conn.php';
 
-//Extensão PHP Getters & Setters
-
-class Funcionario {
+class Funcionario
+{
     private $id;
     private $nome;
     private $email;
@@ -12,59 +11,71 @@ class Funcionario {
     private $conn;
     private $tabela = "funcionario";
 
-    public function getID(): mixed {
+
+    public function getID(): mixed
+    {
         return $this->id;
     }
 
-    public function setID($id): static 
+    public function setID($id): static
     {
         $this->id = $id;
         return $this;
     }
 
-    public function getNome($nome): mixed {
+    public function getNome(): mixed
+    {
         return $this->nome;
     }
 
-    public function setNome($nome): mixed
+    public function setNome($nome): static
     {
         $this->nome = $nome;
-        return $nome;
+        return $this;
     }
 
-    public function getEmail() {
+    public function getEmail(): mixed
+    {
         return $this->email;
     }
 
-    public function setEmail($email): mixed
+    public function setEmail($email): static
     {
         $this->email = $email;
-        return $email;
+        return $this;
     }
 
-    public function getCargo() {
+    public function getCargo(): mixed
+    {
         return $this->cargo;
     }
 
-    public function setCargo($cargo): mixed
+    public function setCargo($cargo): static
     {
         $this->cargo = $cargo;
-        return $cargo;
+        return $this;
     }
 
-    public function salvar() 
+
+    public function salvar()
     {
-        try{
+        try {
             $this->conn = new Conn();
-            $sql = "Call salvar_funcionario(?, ?, ?, ?)";
+
+            $sql = "CALL salvar_funcionario(?, ?, ?, ?)";
+
             $executar = $this->conn->prepare($sql);
+
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
             $executar->bindValue(3, mb_strtoupper($this->email));
             $executar->bindValue(4, mb_strtoupper($this->cargo));
+
             return $executar->execute() == 1 ? true : false;
+
         } catch (PDOException $erro) {
             echo $erro->getMessage();
+            return false;
         }
     }
 
@@ -72,43 +83,44 @@ class Funcionario {
     {
         try {
             $this->conn = new Conn();
+
             $sql = "CALL listar_funcionario(?)";
+
             $executar = $this->conn->prepare($sql);
             $executar->bindValue(1, $var_id);
-            return $executar->execute() == 1 ? $executar->fetchAll() : false;
+
+            return $executar->execute() == 1
+                ? $executar->fetchAll(PDO::FETCH_ASSOC)
+                : false;
+
         } catch (PDOException $erro) {
             echo $erro->getMessage();
-        }
-    }
-    
-    // métodos sem procedure
-
-    public function excluir()
-    {
-        try{
-            $this->conn = new Conn();
-            $sql = "DELETE FROM {$this->tabela} WHERE id= ?";
-            $executar = $this->conn->prepare($sql); 
-            $executar->bindValue(1,$this->id);
-            return $executar->execute() == 1 ? true : false;
-        } catch (PDOException $erro){
-            echo $erro->getMessage();
+            return false;
         }
     }
 
+    //metodos sem procedure
     public function inserir()
     {
         try {
             $this->conn = new Conn();
-            $sql = "INSERT INTO funcionario VALUES (?, ?, ?, ?)";
+
+            $sql = "INSERT INTO {$this->tabela}
+                    (id, nome, email, cargo)
+                    VALUES (?, ?, ?, ?)";
+
             $executar = $this->conn->prepare($sql);
+
             $executar->bindValue(1, $this->id);
             $executar->bindValue(2, mb_strtoupper($this->nome));
             $executar->bindValue(3, mb_strtoupper($this->email));
             $executar->bindValue(4, mb_strtoupper($this->cargo));
-            return $executar->execute() == 1 ? true : false;
-        } catch (PDOException $erro){
+
+            return $executar->execute();
+
+        } catch (PDOException $erro) {
             echo $erro->getMessage();
+            return false;
         }
     }
 
@@ -116,17 +128,41 @@ class Funcionario {
     {
         try {
             $this->conn = new Conn();
-            $sql = "UPDATE funcionario 
-                    SET nome = ?, email = ?, cargo = ?,
+
+            $sql = "UPDATE {$this->tabela}
+                    SET nome = ?, email = ?, cargo = ?
                     WHERE id = ?";
+
             $executar = $this->conn->prepare($sql);
+
             $executar->bindValue(1, mb_strtoupper($this->nome));
             $executar->bindValue(2, mb_strtoupper($this->email));
-            $executar->bindValue(4, mb_strtoupper($this->cargo));
-            $executar->bindValue(4, $this->id); 
-            return $executar->execute() == 1 ? true :false;
-        } catch (PDOException $erro){
+            $executar->bindValue(3, mb_strtoupper($this->cargo));
+            $executar->bindValue(4, $this->id);
+
+            return $executar->execute();
+
+        } catch (PDOException $erro) {
             echo $erro->getMessage();
+            return false;
+        }
+    }
+
+    public function excluir()
+    {
+        try {
+            $this->conn = new Conn();
+
+            $sql = "DELETE FROM {$this->tabela} WHERE id = ?";
+
+            $executar = $this->conn->prepare($sql);
+            $executar->bindValue(1, $this->id);
+
+            return $executar->execute();
+
+        } catch (PDOException $erro) {
+            echo $erro->getMessage();
+            return false;
         }
     }
 
@@ -134,11 +170,17 @@ class Funcionario {
     {
         try {
             $this->conn = new Conn();
+
             $sql = "SELECT * FROM {$this->tabela} ORDER BY nome";
-            $executar = $this->conn->prepare($sql); 
-            return $executar->execute() == 1 ? true :false;
-        } catch (PDOException $erro){
+
+            $executar = $this->conn->prepare($sql);
+            $executar->execute();
+
+            return $executar->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $erro) {
             echo $erro->getMessage();
+            return false;
         }
     }
 
@@ -146,58 +188,66 @@ class Funcionario {
     {
         try {
             $this->conn = new Conn();
+
             $sql = "SELECT * FROM {$this->tabela} WHERE id = ?";
+
             $executar = $this->conn->prepare($sql);
-            $executar->bindValue(1, $this->id); 
-            return $executar->execute() == 1 ? true :false;
-        } catch (PDOException $erro){
+            $executar->bindValue(1, $this->id);
+            $executar->execute();
+
+            return $executar->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $erro) {
             echo $erro->getMessage();
+            return false;
         }
     }
 
     public function crudPhp($opcao)
     {
         try {
-
-            $this->con = new Conn();
+            $this->conn = new Conn();
 
             switch ($opcao) {
 
                 case 'I':
 
                     $sql = "INSERT INTO {$this->tabela}
-                        (nome, informacoes)
-                        VALUES (?, ?)";
+                            (id, nome, email, cargo)
+                            VALUES (?, ?, ?, ?)";
 
-                    $executar = $this->con->prepare($sql);
+                    $executar = $this->conn->prepare($sql);
 
-                    $executar->bindValue(1, mb_strtoupper($this->nome));
-                    $executar->bindValue(2, mb_strtoupper($this->uf));
+                    $executar->bindValue(1, $this->id);
+                    $executar->bindValue(2, mb_strtoupper($this->nome));
+                    $executar->bindValue(3, mb_strtoupper($this->email));
+                    $executar->bindValue(4, mb_strtoupper($this->cargo));
 
                     break;
 
                 case 'A':
 
-                    $sql = "UPDATE {$this->table}
-                           SET nome = ?,
-                               informacoes = ?
-                         WHERE id = ?";
+                    $sql = "UPDATE {$this->tabela}
+                            SET nome = ?,
+                                email = ?,
+                                cargo = ?
+                            WHERE id = ?";
 
-                    $executar = $this->con->prepare($sql);
+                    $executar = $this->conn->prepare($sql);
 
                     $executar->bindValue(1, mb_strtoupper($this->nome));
-                    $executar->bindValue(2, mb_strtoupper($this->uf));
-                    $executar->bindValue(3, $this->id);
+                    $executar->bindValue(2, mb_strtoupper($this->email));
+                    $executar->bindValue(3, mb_strtoupper($this->cargo));
+                    $executar->bindValue(4, $this->id);
 
                     break;
 
                 case 'E':
 
                     $sql = "DELETE FROM {$this->tabela}
-                        WHERE id = ?";
+                            WHERE id = ?";
 
-                    $executar = $this->con->prepare($sql);
-
+                    $executar = $this->conn->prepare($sql);
                     $executar->bindValue(1, $this->id);
 
                     break;
@@ -206,11 +256,11 @@ class Funcionario {
                     return false;
             }
 
-            return $executar->execute() == 1 ? true : false;
-        } catch (PDOException $exc) {
+            return $executar->execute();
 
-            echo $exc->getMessage();
+        } catch (PDOException $erro) {
+            echo $erro->getMessage();
+            return false;
         }
     }
-
 }

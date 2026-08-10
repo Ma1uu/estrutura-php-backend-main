@@ -8,9 +8,10 @@
                 Listar Clientes
 
                 <a class="btn btn-success float-right mb-3 mr-3"
-                    href="?p=add/cliente">
+                   href="?p=add/cliente">
 
                     <i class="bi bi-database-fill-add"></i>
+
                 </a>
             </h3>
 
@@ -27,26 +28,42 @@
 
                 <tbody>
 
-                     <?php
+                    <?php
+
                     include_once '../models/Cliente.php';
-                    $cat = new Cliente();
-                    $dados = $cat->listar(null);
-                    foreach ($dados as $mostrar) {
+
+                    $cli = new Cliente();
+
+                    // SEM PROCEDURE
+                    $dados = $cli->listarSemProcedure();
+
+                    if ($dados) {
+
+                        foreach ($dados as $mostrar) {
                     ?>
+
                     <tr>
                         <td><?= $mostrar['id'] ?></td>
                         <td><?= $mostrar['nome'] ?></td>
                         <td><?= $mostrar['email'] ?></td>
+
                         <td>
+
                             <a href="?p=excluir/cliente&id=<?= $mostrar['id'] ?>"
-                            class="btn btn-danger"
-                            title="Excluir"
-                            onclick="return confirm('Tem certeza que deseja excluir?')">
+                               class="btn btn-danger"
+                               title="Excluir"
+                               onclick="return confirm('Tem certeza que deseja excluir?')">
+
                                 <i class="bi bi-x-circle"></i>
+
                             </a>
+
                         </td>
+
                     </tr>
+
                     <?php
+                        }
                     }
                     ?>
 
